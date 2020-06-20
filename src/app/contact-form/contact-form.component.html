@@ -1,0 +1,32 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <div class="form-group">
+    <label for="firstName">First Name</label>
+    <input required minlength="4" pattern="banana" ngModel name="firstName" #firstName="ngModel" id="firstName" class="form-control">
+    <div  *ngIf=" firstName.touched && !firstName.valid">
+      <div class="alert alert-danger" *ngIf="firstName.errors.required">first name can not be blank</div>
+      <div class="alert alert-danger" *ngIf="firstName.errors.minlength">length must be at-least {{firstName.errors.minlength.requiredLength}} char long</div>
+      <div class="alert alert-danger" *ngIf="firstName.errors.pattern">pattern mismatched</div>
+    </div>
+  </div>
+<div class="form-group">
+  <label for="lastName">Last Name</label>
+  <input ngModel name="lastName" id="lastName" #lastName="ngModel" class="form-control">
+</div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ngModel name="isSubscribed">Subscribed to mailing list
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="contactMethod">Contact Method</label>
+    <select multiple  ngModel name="contactMethod1" id="contactMethod">
+      <option *ngFor="let m of contacts" [ngValue]="m">{{m.contactMethod}}</option>
+    </select>
+  </div>
+  <div class="custom-radio" *ngFor="let method of contacts">
+    <input type="radio" ngModel name="contactMethod2" [value]="method.id">
+    {{method.contactMethod}}
+  </div>
+  <p>{{f.value | json}}</p>
+<button class="btn btn-primary" [disabled]="!f.valid">Submit</button>
+</form>
