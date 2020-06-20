@@ -1,0 +1,35 @@
+<div class="card my-5">
+  <div class="card-body">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input #name="ngModel" [(ngModel)]="user.name"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Enter your name"
+               required type="text">
+        <div *ngIf="name.touched && !name.valid" class="alert alert-danger">name field can not be black</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input #email="ngModel" [(ngModel)]="user.email"
+               class="form-control"
+               id="email"
+               name="email"
+               pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"
+               placeholder="Enter your email address" required type="text">
+        <div *ngIf="name.touched && !name.valid">
+          <div *ngIf="email.errors.required" class="alert alert-danger">email field can not be blank</div>
+
+              <div *ngIf="email.errors.pattern" class="alert alert-danger">invalid email pattern</div>
+
+        </div>
+                <button [disabled]="!userForm.form.valid" class="btn btn-info"
+                        type="submit">Submit
+                </button>
+      </div>
+    </form>
+  </div>
+</div>
